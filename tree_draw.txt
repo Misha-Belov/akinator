@@ -1,0 +1,15 @@
+digraph {
+	"00BE1560" [label = "real", color = "blue"]
+	"00BE1560" -> "00BE4878"
+	"00BE4878" [label = "unknow", color = "blue"]
+	"00BE1560" -> "00BE1820"
+	"00BE1820" [label = "ded", color = "blue"]
+	"00BE1820" -> "00BE4968"
+	"00BE4968" [label = "sbvf", color = "blue"]
+	"00BE1820" -> "00BE48F0"
+	"00BE48F0" [label = "svsf", color = "blue"]
+	"00BE48F0" -> "00BE4A58"
+	"00BE4A58" [label = "yuth", color = "blue"]
+	"00BE48F0" -> "00BE49E0"
+	"00BE49E0" [label = "sad", color = "blue"]
+}
