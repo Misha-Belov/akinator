@@ -14,6 +14,7 @@ void game(node * root);
 void import_tree (node * root);
 void person_insert(node * root, char * ans, char * que);
 void definition(node * root);
+void print_definition(node * root, stack * def_stack);
 void person_search(node * root, char * person_name, stack * def_stack);
 void save_tree(node * root, FILE* file);
 void tree_destr(node * root);

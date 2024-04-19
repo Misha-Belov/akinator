@@ -130,8 +130,76 @@ void definition(node * root)
 
     person_search(root, answer, &def_stack);
     print_stack(&def_stack);
+    print_definition(root, &def_stack);
 
     free(answer);
+}
+
+void print_definition(node * root, stack * def_stack)
+{
+    int direction = 0;
+    bool is_first = 1;
+    // bool is_prelast = 0; 
+
+    while (def_stack->size != 0)
+    {
+        direction = pop(def_stack);
+        
+        if (def_stack->size != 0)
+        {
+            is_first = 0;
+
+            if (direction == 1)
+            {
+                if (def_stack->size == 1)
+                {
+                    printf("%s ", root->content);
+                }
+                else
+                {
+                    printf("%s, ", root->content);
+                }
+                root = root->yes;
+            }
+            else
+            {
+                if (def_stack->size == 1)
+                {
+                    printf("not %s ", root->content);
+                }
+                else
+                {
+                    printf("not %s, ", root->content);
+                }
+                root = root->no;
+            }
+        }
+        else
+        {
+            if (direction == 1)
+            {
+                if(is_first == 1)
+                {
+                    printf("%s.\n", root->content);
+                }
+                else
+                {
+                    printf("and %s.\n", root->content);
+                }
+            }
+            else
+            {
+                if(is_first == 1)
+                {
+                    printf("not %s.\n", root->content);
+                }
+                else
+                {
+                    printf("and not %s.\n", root->content);
+                }
+            }
+        }
+    }
 }
 
 void person_search(node * root, char * person_name, stack * def_stack)
@@ -148,9 +216,11 @@ void person_search(node * root, char * person_name, stack * def_stack)
     }
     else if (root->no != NULL)
     {
-        push(def_stack, 1);
+        push(def_stack, 0);
         person_search(root->no, person_name, def_stack);
     }
+
+    // print_stack(def_stack);
 }
 
 void save_tree(node * root, FILE* file)
@@ -217,8 +287,8 @@ void fill_tree(node * root, char * string, size_t * pos)
                 root->no = insert_node_no;
                 root->yes = insert_node_yes;
 
-                fill_tree(root->no, string, pos);
                 fill_tree(root->yes, string, pos);
+                fill_tree(root->no, string, pos);
             }
         }
     }
