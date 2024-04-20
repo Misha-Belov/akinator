@@ -1,1 +1,1 @@
-{real{ded{svsf{sad{}}{yuth{}}}{sbvf{}}}{unknow{}}}
+{animal{real{human{ded{}}{poltorashka{}}}{horse{unicorn{}}{dragon{}}}}{tree{oak{}}{car{F1{}}{house{}}}}{unknown{}}}

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../stand_funcs/stack.h"
-// #include "../../stand_funcs/queue.h"
 
 
 struct node
@@ -14,6 +13,7 @@ struct node
 
 void game(node * root);
 void import_tree (node * root);
+void export_tree(node * root);
 void person_insert(node * root, char * ans, char * que);
 void definition(node * root);
 void comparison(node * root);

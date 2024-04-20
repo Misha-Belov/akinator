@@ -1,15 +1,27 @@
 digraph {
-	"001F1560" [label = "real", color = "blue"]
-	"001F1560" -> "001F1740"
-	"001F1740" [label = "unknow", color = "blue"]
-	"001F1560" -> "001F16C8"
-	"001F16C8" [label = "ded", color = "blue"]
-	"001F16C8" -> "001F3870"
-	"001F3870" [label = "sbvf", color = "blue"]
-	"001F16C8" -> "001F17B8"
-	"001F17B8" [label = "svsf", color = "blue"]
-	"001F17B8" -> "001F3960"
-	"001F3960" [label = "yuth", color = "blue"]
-	"001F17B8" -> "001F38E8"
-	"001F38E8" [label = "sad", color = "blue"]
+	"00C41560" [label = "animal", color = "blue"]
+	"00C41560" -> "00C41780"
+	"00C41780" [label = "tree", color = "blue"]
+	"00C41780" -> "00C480B8"
+	"00C480B8" [label = "car", color = "blue"]
+	"00C480B8" -> "00C48400"
+	"00C48400" [label = "house", color = "blue"]
+	"00C480B8" -> "00C48220"
+	"00C48220" [label = "F1", color = "blue"]
+	"00C41780" -> "00C404B0"
+	"00C404B0" [label = "oak", color = "blue"]
+	"00C41560" -> "00C41708"
+	"00C41708" [label = "real", color = "blue"]
+	"00C41708" -> "00C44878"
+	"00C44878" [label = "horse", color = "blue"]
+	"00C44878" -> "00C44C38"
+	"00C44C38" [label = "dragon", color = "blue"]
+	"00C44878" -> "00C44BC0"
+	"00C44BC0" [label = "unicorn", color = "blue"]
+	"00C41708" -> "00C417F8"
+	"00C417F8" [label = "human", color = "blue"]
+	"00C417F8" -> "00C44968"
+	"00C44968" [label = "poltorashka", color = "blue"]
+	"00C417F8" -> "00C448F0"
+	"00C448F0" [label = "ded", color = "blue"]
 }
