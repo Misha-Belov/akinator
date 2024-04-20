@@ -23,20 +23,24 @@ void import_tree(node * root)
 {
     char * answer = (char *) calloc(100, sizeof(char));
 
-    printf("do you want to import tree?\n");
-    scanf("%s", answer);
+    // printf("do you want to import tree?\n");
+    // scanf("%s", answer);
 
-    if (!strcmp(answer, "yes"))
-    {
-        FILE* tree_scan = fopen("tree_save.txt", "rb");
-        scan_tree(root, tree_scan);
-        fclose(tree_scan);
-    }
-    else
-    {
-        char first[100] = "unknown";
-        strcpy(root->content, first);
-    }
+    // if (!strcmp(answer, "yes"))
+    // {
+    //     FILE* tree_scan = fopen("tree_save.txt", "rb");
+    //     scan_tree(root, tree_scan);
+    //     fclose(tree_scan);
+    // }
+    // else
+    // {
+    //     char first[100] = "unknown";
+    //     strcpy(root->content, first);
+    // }
+
+    FILE* tree_scan = fopen("tree_save.txt", "rb");
+    scan_tree(root, tree_scan);
+    fclose(tree_scan);
 
     free(answer);
 }
@@ -63,6 +67,11 @@ void game(node * root)
         if (!strcmp(answer, "D"))
         {
             definition(root);
+        }
+
+        if (!strcmp(answer, "C"))
+        {
+            comparison(root);
         }
 
         if (root->yes == NULL && root->no == NULL)
@@ -122,18 +131,81 @@ void person_insert(node * root, char * ans, char * que)
 
 void definition(node * root)
 {
+    bool is_found = 0;
     char * answer = (char *) calloc(100, sizeof(char));
-    stack def_stack {};
+    stack def_stack;
+    stack_construct(&def_stack, 10);
 
-    printf("type your character:\n");
+    printf("input your character:\n");
     scanf("%s", answer);
 
-    person_search(root, answer, &def_stack);
+    person_search(root, answer, &def_stack, &is_found);
     print_stack(&def_stack);
+    printf("%s is ", answer);
     print_definition(root, &def_stack);
 
+    stack_destruct(&def_stack);
     free(answer);
 }
+
+void comparison(node * root)
+{
+    bool is_found = 0;
+
+    char * answer_1 = (char *) calloc(100, sizeof(char));
+    char * answer_2 = (char *) calloc(100, sizeof(char));
+
+    stack def_stack_1;
+    stack def_stack_2;
+    stack comp_stack;
+
+    stack_construct(&def_stack_1, 10);
+    stack_construct(&def_stack_2, 10);
+    stack_construct(&comp_stack, 10);
+
+    printf("input first character:\n");
+    scanf("%s", answer_1);
+    person_search(root, answer_1, &def_stack_1, &is_found);
+    print_stack(&def_stack_1);
+
+    is_found = 0;
+    
+    printf("input second character:\n");
+    scanf("%s", answer_2);
+    person_search(root, answer_2, &def_stack_2, &is_found);
+    print_stack(&def_stack_2);
+
+    stack_compare(&def_stack_1, &def_stack_2, &comp_stack);
+    print_stack(&comp_stack);
+    print_compare(&comp_stack, &def_stack_1, &def_stack_2, answer_1, answer_2, root);
+
+
+    stack_destruct(&def_stack_1);
+    stack_destruct(&def_stack_2);
+    stack_destruct(&comp_stack);
+
+    free(answer_1);
+    free(answer_2);
+}
+
+void stack_compare(stack * def_stack_1, stack * def_stack_2, stack * comp_stack)
+{
+    int i = 0;
+    while (def_stack_1->data[i] == def_stack_2->data[i])
+    {
+        if (def_stack_1->data[i] == 1)
+        {
+            push(comp_stack, 1);
+        }
+        else
+        {
+            push(comp_stack, 0);
+        }
+        // printf("direct - %d", def_stack_1->data[i]);
+        i++;
+    }
+}
+
 
 void print_definition(node * root, stack * def_stack)
 {
@@ -141,9 +213,11 @@ void print_definition(node * root, stack * def_stack)
     bool is_first = 1;
     // bool is_prelast = 0; 
 
+
     while (def_stack->size != 0)
     {
-        direction = pop(def_stack);
+        direction = queue_pop(def_stack);
+        // printf("direct: %d\n", direction);
         
         if (def_stack->size != 0)
         {
@@ -202,28 +276,91 @@ void print_definition(node * root, stack * def_stack)
     }
 }
 
-void person_search(node * root, char * person_name, stack * def_stack)
+void print_compare(stack * comp_ctack, stack * def_stack_1, stack * def_stack_2, char * name_1, char * name_2, node * root)
 {
-    if (!strcmp(root->content, person_name))
+    int direction_1 = 0;
+    int direction_2 = 0;
+    bool is_first = 1;
+    // bool is_prelast = 0; 
+
+    if(!strcmp(name_1, name_2))
     {
-        printf("charachter found\n");
+        printf("it is one person");
         return;
     }
-    else if (root->yes != NULL)
-    {
-        push(def_stack, 1);
-        person_search(root->yes, person_name, def_stack);
-    }
-    else if (root->no != NULL)
-    {
-        push(def_stack, 0);
-        person_search(root->no, person_name, def_stack);
-    }
 
-    // print_stack(def_stack);
+    while (def_stack_1->size != 0 && def_stack_2->size != 0)
+    {
+        direction_1 = queue_pop(def_stack_1);
+        direction_2 = queue_pop(def_stack_2);
+
+        if (direction_1 == direction_2 && is_first == 1)
+        {
+            if(direction_1 == 1)
+            {
+                printf("%s is like %s in that they're both %s", name_1, name_2, root->content);
+                root = root->yes;
+            }
+            if(direction_1 == 0)
+            {
+                printf("%s is like %s in that they're both not %s", name_1, name_2, root->content);
+                root = root->no;
+            }
+
+            direction_1 = queue_pop(def_stack_1);
+            direction_2 = queue_pop(def_stack_2);
+
+            while (direction_1 == direction_2 && def_stack_1->size != 0 && def_stack_2->size != 0)
+            {
+                if(direction_1 == 1)
+                {
+                    printf(", %s", root->content);
+                    root = root->yes;
+                }
+                if(direction_1 == 0)
+                {
+                    printf(", not %s", root->content);
+                    root = root->no;
+                }
+
+                direction_1 = queue_pop(def_stack_1);
+                direction_2 = queue_pop(def_stack_2);
+            }
+        }
+    }
 }
 
-void save_tree(node * root, FILE* file)
+void person_search(node * root, char * person_name, stack * def_stack, bool * is_found)
+{
+    // print_stack(def_stack);
+    // printf("%s\n", root->content);
+    
+    if (!strcmp(root->content, person_name))
+    {
+        *is_found = 1;
+        printf("charachter found\n");
+        // print_stack(def_stack);
+        return;
+    }
+    if (root->yes != NULL && *is_found == 0)
+    {
+        push(def_stack, 1);
+        person_search(root->yes, person_name, def_stack, is_found);
+        if (*is_found == 1) return;
+        pop(def_stack);
+    }
+    if (root->no != NULL && *is_found == 0)
+    {
+        push(def_stack, 0);
+        person_search(root->no, person_name, def_stack, is_found);
+        if (*is_found == 1) return;
+        pop(def_stack);
+    }
+    // return;
+    // print_queue(def_stack);
+}
+
+void save_tree(node * root, FILE * file)
 {
     fprintf(file, "{%s", root->content);
 
@@ -329,4 +466,17 @@ void tree_destr(node * root)
 
 
     free(root);
+}
+
+int queue_pop(struct stack* pstk)
+{
+    if (pstk->size == 0)
+    {
+        printf("queue is empty\n");
+        return -374560234;
+    }
+
+    pstk->data++;
+    pstk->size--;
+    return *(pstk->data - 1);
 }

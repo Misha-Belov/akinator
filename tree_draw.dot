@@ -1,15 +1,15 @@
 digraph {
-	"00E01560" [label = "real", color = "blue"]
-	"00E01560" -> "00E01740"
-	"00E01740" [label = "unknow", color = "blue"]
-	"00E01560" -> "00E016C8"
-	"00E016C8" [label = "ded", color = "blue"]
-	"00E016C8" -> "00E04878"
-	"00E04878" [label = "sbvf", color = "blue"]
-	"00E016C8" -> "00E017B8"
-	"00E017B8" [label = "svsf", color = "blue"]
-	"00E017B8" -> "00E04968"
-	"00E04968" [label = "yuth", color = "blue"]
-	"00E017B8" -> "00E048F0"
-	"00E048F0" [label = "sad", color = "blue"]
+	"001F1560" [label = "real", color = "blue"]
+	"001F1560" -> "001F1740"
+	"001F1740" [label = "unknow", color = "blue"]
+	"001F1560" -> "001F16C8"
+	"001F16C8" [label = "ded", color = "blue"]
+	"001F16C8" -> "001F3870"
+	"001F3870" [label = "sbvf", color = "blue"]
+	"001F16C8" -> "001F17B8"
+	"001F17B8" [label = "svsf", color = "blue"]
+	"001F17B8" -> "001F3960"
+	"001F3960" [label = "yuth", color = "blue"]
+	"001F17B8" -> "001F38E8"
+	"001F38E8" [label = "sad", color = "blue"]
 }
